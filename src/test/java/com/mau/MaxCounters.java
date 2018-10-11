@@ -3,18 +3,24 @@ package com.mau;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class ASample {
+public class MaxCounters {
 
     class Solution {
-        public int solution(int[] A) {
-            return 0;
+
+        public int[] solution(int N, int[] A) {
+            return null;
         }
+
     }
 
     @Test
     public void test_01() {
         Solution s = new Solution();
-        Assertions.assertEquals(4, s.solution(new int[]{}));
+
+//        final int solution = s.solution(new int[]{});
+//
+//        Assertions.assertEquals(4, solution);
+
     }
 
 }
