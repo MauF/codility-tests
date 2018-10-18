@@ -3,6 +3,7 @@ package com.mau;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.stream.Collectors;
@@ -57,7 +58,7 @@ public class MissingInteger {
     @Test
     public void test_03() {
         Solution s = new Solution();
-
+        new ArrayList();
         Assertions.assertEquals(4, s.solution(new int[]{1, 2, 3}));
 
     }
