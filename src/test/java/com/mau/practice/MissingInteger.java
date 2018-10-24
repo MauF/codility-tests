@@ -1,34 +1,27 @@
-package com.mau;
+package com.mau.practice;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.stream.Collectors;
 
 public class MissingInteger {
 
     class Solution {
 
         public int solution(int[] A) {
-            Arrays.sort(A);
 
-            HashSet<Integer> set = new HashSet<>(Arrays.stream(A).boxed().collect(Collectors.toList()));
+            HashSet<Integer> set = new HashSet<>();
 
             int solution = 1;
 
-            for (Integer val : set) {
-                if (val <= 0) {
-                    continue;
-                }
+            for (int i = 0; i < A.length; i++) {
+                set.add(A[i]);
+            }
 
-                if (val == solution) {
-                    solution++;
-                } else {
-                    break;
-                }
+            while(set.contains(solution)) {
+                solution++;
             }
 
             return solution;

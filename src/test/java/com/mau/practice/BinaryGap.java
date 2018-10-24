@@ -1,4 +1,4 @@
-package com.mau;
+package com.mau.practice;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
