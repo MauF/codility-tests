@@ -3,6 +3,8 @@ package com.mau.practice;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigInteger;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 public class MinAvgTwoSlice {
@@ -10,66 +12,64 @@ public class MinAvgTwoSlice {
     class Solution {
 
         public int[] prefixSum(int[] A) {
-
-            final int length = A.length;
-            int[] result = new int[length];
-
-            result[0] = A[0];
-
-            for (int i = 1; i < length; i++) {
-                result[i] = result[i - 1] + A[i];
+            int[] ret = new int[A.length];
+            ret[0] = A[0];
+            for (int i = 1; i < A.length; i++) {
+                ret[i] = ret[i - 1] + A[i];
             }
-
-            return result;
-        }
-
-        public int calculateAvg(int[] A, int P, int Q) {
-
-            final int length = (Q - P) + 1;
-            int[] partial = new int[length];
-
-            for (int i = P; i < length; i++) {
-                partial[i] = A[i];
-            }
-
-            int[] pSum = prefixSum(partial);
-
-            int valP = pSum[P];
-            int valQ = pSum[Q];
-
-            final int difference = valP + valQ;
-
-            return difference/length;
+            return ret;
         }
 
         public int solution(int[] A) {
+            //main idea: will find min average by checking only 2 and 3 contiguous elements at a time
+            int sum1, sum2 = 0;
+            double minAverage = Double.MAX_VALUE;
+            double currentAverage1 = Double.MAX_VALUE;
+            double currentAverage2 = Double.MAX_VALUE;
+            int minAverageSliceIndex = 0; //for size 2 arrays, this will always be true
 
-            TreeSet<Integer> set = new TreeSet<>();
+            //if array is > 2 elements
+            for (int i = 0; i < A.length - 2; i++) {
+                sum1 = A[i] + A[i + 1];
+                currentAverage1 = sum1 / 2.0d;
+                if (currentAverage1 < minAverage) {
+                    minAverage = currentAverage1;
+                    minAverageSliceIndex = i;
+                }
 
-            for (int i = 0; i < A.length; i++) {
-                for (int j = i; j < A.length; j++) {
-                    if(j == 0) {
-                        continue;
-                    }
-                    final int avg = calculateAvg(A, i, j);
-                    set.add(avg);
+                sum2 = sum1 + A[i + 2];
+                currentAverage2 = sum2 / 3.0d;
+                if (currentAverage2 < minAverage) {
+                    minAverage = currentAverage2;
+                    minAverageSliceIndex = i;
                 }
             }
 
-            return set.first();
+            //check last 2 contiguous elements from the end - they won't otherwise be checked because
+            //when checking 2 and 3 contiguous elements at a time, will stop checking 3 elements from the end
+            currentAverage1 = (A[A.length - 2] + A[A.length - 1]) / 2.0d;
+            if (currentAverage1 < minAverage) {
+                minAverage = currentAverage1;
+                minAverageSliceIndex = A.length - 2;
+            }
+
+            return minAverageSliceIndex;
         }
+
+
     }
 
     @Test
     public void test_01() {
         Solution s = new Solution();
+//        s.prefixSum(new int[]{10, 4, 16, 20});
         Assertions.assertEquals(1, s.solution(new int[]{4, 2, 2, 5, 1, 5, 8}));
     }
 
     @Test
     public void test_02() {
         Solution s = new Solution();
-        Assertions.assertArrayEquals(new int[]{10,14,30,50}, s.prefixSum(new int[]{10, 4, 16, 20}));
+        Assertions.assertArrayEquals(new int[]{10, 14, 30, 50}, s.prefixSum(new int[]{10, 4, 16, 20}));
     }
 
 }
