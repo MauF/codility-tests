@@ -14,7 +14,6 @@ public class MaxCounters {
 
             for (int k = 0; k < A.length; k++) {
                 if (A[k] >= 1 && A[k] <= N) {
-                    // this is instead of the nested loop in solution2
                     counters[A[k] - 1] = Math.max(counters[A[k] - 1], lastMax);
                     counters[A[k] - 1] += 1;
                     max = Math.max(max, counters[A[k] - 1]);
